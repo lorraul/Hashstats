@@ -2,7 +2,7 @@
 
 require "config.php";
 require "functions.php";
-require "lib/twitteroauth/autoload.php";
+require "lib/twitteroauth/autoloader.php";
 
 use Abraham\TwitterOAuth\TwitterOAuth;
 
@@ -31,8 +31,6 @@ for ($i=0;$i<=count($tweets)-1;$i++){
 
 $words = array();
 $lang = array();
-
-mb_regex_encoding("UTF-8"); 
 
 for ($i=0;$i<=count($tweets)-1;$i++){   
     
