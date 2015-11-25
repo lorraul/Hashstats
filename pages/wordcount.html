@@ -1,0 +1,23 @@
+<h2>Word cloud</h2>
+
+<div ng-if="filecontent() == 'no file'">No stats! <a href="#/form">Search for a keyword.</a></div>
+
+<div ng-if="filecontent() != 'no file'">
+    
+    <p>Word frequency in analyzed tweets.</p>
+    
+    <form name="hideKeyword">
+    <label>Hide main keyword '{{mainkeyword}}':
+    <input type="checkbox" ng-model="formobj.hidekw">
+    </label>
+    </form>
+
+    <hr/>
+
+    <div>
+        <span ng-repeat="(key, data) in words">
+        <span style="font-size: {{10 + (data-1)*(90/(max-2))}}px">{{key}}</span> ({{data}}) - 
+        </span>
+    </div>
+    
+</div>

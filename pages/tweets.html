@@ -1,0 +1,10 @@
+<h2>Tweets</h2>
+
+<div ng-if="filecontent() == 'no file'">No stats! <a href="#/form">Search for a keyword.</a></div>
+
+<div ng-if="filecontent() != 'no file'">
+    <p>List of tweets the statistics based on.</p>
+    <div ng-repeat="tweet in tweets">
+        <tweet info="tweet"/>
+    </div>
+</div>

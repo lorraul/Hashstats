@@ -1,0 +1,9 @@
+<h2>Home</h2>
+
+<div ng-if="filecontent() == 'no file'">No stats! <a href="#/form">Search for a keyword.</a></div>
+
+<div ng-if="filecontent() != 'no file'">
+    <p>Statistics based on {{filecontent().meta.numtweets}} tweets, from {{filecontent().meta.start * 1000 | date:"MMM d, yyyy h:mm a"}} to {{filecontent().meta.end * 1000 | date:"MMM d, yyyy h:mm a"}}.</p>
+    
+    <p>Use the menu above to see details about analyzed tweets, languages of tweets, and world cloud based on freqency of words used.</p>
+</div>

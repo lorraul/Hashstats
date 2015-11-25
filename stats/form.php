@@ -1,12 +1,14 @@
 <html>
     
-<head><title>Hashstats</title></head>
+<head>
+    <title>Hashstats</title>
+</head>
     
-<body>
+<body ng-app="Top10App">
 <h1>Hashstats</h1>
 
 Some predefined variables:<br/>
-<small>PAGENUM = 2, PAGESIZE = 30, MIN_FOLLOWERS = 10, MIN_WORDCOUNT = 2</small>
+<small>PAGENUM = 4, PAGESIZE = 200, MIN_FOLLOWERS = 10, MIN_WORDCOUNT = 2</small>
 <br/><br/>
 <form action="stats.php" method="get">
   Enter keyword or hashtag:<br>

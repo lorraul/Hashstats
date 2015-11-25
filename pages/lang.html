@@ -1,0 +1,20 @@
+<h2>Languages</h2>
+
+<div ng-if="filecontent() == 'no file'">No stats! <a href="#/form">Search for a keyword.</a></div>
+
+<div ng-if="filecontent() != 'no file'">
+    
+    <p>Languages of analyzed tweets.</p>
+
+<div style="width: 50%">
+    <canvas id="bar" class="chart chart-bar"
+      ng-attr-chart-data="langcount" ng-attr-chart-labels="labels">
+    </canvas>
+</div>
+
+
+<div style="width: 50%">
+Languages appearing once: {{langonce}}
+</div> 
+
+</div>
