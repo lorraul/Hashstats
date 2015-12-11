@@ -1,0 +1,21 @@
+<h2>Sentiment</h2>
+
+<div ng-if="filecontent() == 'no file'">No stats! <a href="#/form">Search for a keyword.</a></div>
+
+<div ng-if="filecontent() != 'no file'">
+    
+    <p>Sentiment of analyzed tweets using DatumBox. It classifies the tweets as positive, negative or neutral depending on their context.</p>
+    
+    <div id="sentpercent">
+        <div id="positive" class="sentcell"><span class="sentlarge">{{sentimentPercent["positive"]}}%</span><br/>positive</div>
+        <div id="neutral" class="sentcell"><span class="sentlarge">{{sentimentPercent["neutral"]}}%</span><br/>neutral</div>
+        <div id="negative" class="sentcell"><span class="sentlarge">{{sentimentPercent["negative"]}}%</span><br/>negative</div>
+        <div id="undefined" class="sentcell"><span class="sentlarge">{{sentimentPercent["undef"]}}%</span><br/>undefined</div>
+    </div>
+
+
+    <canvas style="margin:0 auto;" id="pie" class="chart chart-pie"
+      chart-data="sentcount" chart-labels="labels" chart-legend="true" chart-options="options" chart-colours="colours">
+    </canvas> 
+
+</div>

@@ -1,3 +1,6 @@
 [submodule "lib/twitteroauth"]
 	path = lib/twitteroauth
 	url = https://github.com/abraham/twitteroauth
+[submodule "lib/datumbox-api-client-php"]
+	path = lib/datumbox-api-client-php
+	url = http://github.com/datumbox/datumbox-api-client-php

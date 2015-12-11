@@ -3,6 +3,7 @@
 require "config.php";
 require "functions.php";
 require "../lib/twitteroauth/autoloader.php";
+require "../lib/datumbox-api-client-php/DatumboxAPI.php";
 
 use Abraham\TwitterOAuth\TwitterOAuth;
 
@@ -17,21 +18,25 @@ for ($i=0;$i<=PAGENUM-1;$i++){
     }
     else{
         $api_response = $twitteroauth->get('search/tweets',array('q' => htmlspecialchars($_GET["keyword"]), 'count' => PAGESIZE));
+        
+        //print_r($api_response);
         $tweets = $api_response->statuses;
     }
     $max_id = bcsub(end($tweets)->id_str,1,0);
 }
 
-/*
-for ($i=0;$i<=count($tweets)-1;$i++){
-    echo $tweets[$i]->id_str.' - '.$tweets[$i]->text.'</br>';
-}
-*/
-
-$meta = array('keyword'=>htmlspecialchars($_GET["keyword"]), 'numtweets'=>PAGESIZE*PAGENUM, 'start'=>'', 'end'=>'');
+$meta = array('keyword'=>htmlspecialchars(strtolower($_GET["keyword"])), 'numtweets'=>count($tweets), 'start'=>'', 'end'=>'');
 $words = array();
 $lang = array();
 $tweetsdata = array();
+$sentiment = array(
+    'positive' => 0,
+    'neutral' => 0,
+    'negative' => 0,
+    'undefined' =>0
+    );
+
+$DatumboxAPI = new DatumboxAPI(DATUMBOX_API);
 
 for ($i=0;$i<=count($tweets)-1;$i++){   
     
@@ -52,7 +57,16 @@ for ($i=0;$i<=count($tweets)-1;$i++){
     
     //Get tweets id, screenname, screenname
     $tweetsdata[] = array($tweets[$i]->id_str, strtotime($tweets[$i]->created_at), $tweets[$i]->user->screen_name, $tweets[$i]->text);
+    
+    
+    //Get tweet sentiment
+    $tweet_sentiment = $DatumboxAPI->SentimentAnalysis($tweets[$i]->text);
+    if ( $tweet_sentiment ) $sentiment[$tweet_sentiment]++;
+    else $sentiment['undefined']++;
+    
 }
+
+unset($DatumboxAPI);
 
 $words = remove_flag_words($words);
 $words = array_values( array_filter($words) );
@@ -75,9 +89,12 @@ $stats = array();
 $stats['meta'] = $meta;
 $stats['word_count'] = $word_count;
 $stats['lang'] = $lang;
+$stats['sentiment'] = $sentiment;
 $stats['tweets'] = $tweetsdata;
 
 //echo '<pre>'; print_r($stats); echo '</pre>';
+
+header('Content-type: application/json');
 
 echo json_encode($stats);
 

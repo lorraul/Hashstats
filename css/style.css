@@ -14,23 +14,29 @@ body {
     font-size: 50px;
     text-align: center;
 }
-#statmenu{
+#menu{
     background-color: #4099ff;
     width: 100%;
     height: 41px;
     overflow: hidden;
 }
-#statmenu ul {
+#menu ul {
     font-size: 18px;
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
-#statmenu li {
+#menu li {
     display: inline;
     float:left;
 }
-#statmenu a:link, #statmenu a:visited {
+#statmenu {
+    float:left;
+}
+#optmenu {
+    float:right;
+}
+#menu a:link, #menu a:visited {
     color: #fff;
     text-decoration: none;
     text-align: center;
@@ -38,7 +44,7 @@ body {
     width: 100px;
     padding: 10px;
 }
-#statmenu a:hover, a:active {
+#menu a:hover, #menu a:active {
     background-color: #7A991A;
 }
 
@@ -74,4 +80,33 @@ input[type=text], input[type=submit] {
 }
 .tweetmeta {
     font-size: 12px;
+}
+#sentpercent{
+    max-width: 60%; 
+    margin: 0 auto;
+}
+#positive{
+    color: #8db600;
+}
+#neutral{
+    color: #fdB600;
+}
+#negative{
+    color: #dc143c;
+}
+#undefined{
+    color: #907b3b;
+}
+.sentcell{
+    width: 25%; 
+    float:left; 
+    text-align: center;
+    margin-bottom: 50px;
+}
+.sentlarge{
+    font-size: 40px;
+}
+.error-message{
+    background-color: #ff0000;
+    color: #fff;
 }

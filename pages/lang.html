@@ -4,17 +4,13 @@
 
 <div ng-if="filecontent() != 'no file'">
     
-    <p>Languages of analyzed tweets.</p>
+    <p>Languages of analyzed tweets based on Twitter account settings.</p>
 
-<div style="width: 50%">
+    <div style="max-width: 600px; margin:0 auto;">
     <canvas id="bar" class="chart chart-bar"
-      ng-attr-chart-data="langcount" ng-attr-chart-labels="labels">
+      ng-attr-chart-data="langcount" ng-attr-chart-labels="labels" chart-options="options" chart-colours="colours" style="width: 500px;" >
     </canvas>
-</div>
-
-
-<div style="width: 50%">
-Languages appearing once: {{langonce}}
-</div> 
+        Languages appearing once: {{langonce}}
+    </div> 
 
 </div>
