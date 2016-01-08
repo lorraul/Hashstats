@@ -3,8 +3,18 @@
 <div ng-if="filecontent() == 'no file'">No stats! <a href="#/form">Search for a keyword.</a></div>
 
 <div ng-if="filecontent() != 'no file'">
-    <p>List of analyzed tweets. Number of tweets: {{filecontent().meta.numtweets}}.</p>
-    <div ng-repeat="tweet in tweets">
-        <tweet info="tweet"/>
+    
+    <div ng-if="filterKeyword != 'all'">
+        <p>List of analyzed tweets. Filtered by keyword: <strong>{{filterKeyword}}</strong>.</p>
+        <div ng-repeat="tweet in tweets | filter:{3:filterKeyword}">
+            <tweet info="tweet"/>
+        </div>
+    </div>
+    
+    <div ng-if="filterKeyword == 'all'">
+        <p>List of analyzed tweets. Number of tweets: {{filecontent().meta.numtweets}}.</p>
+        <div ng-repeat="tweet in tweets">
+            <tweet info="tweet"/>
+        </div>
     </div>
 </div>

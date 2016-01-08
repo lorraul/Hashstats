@@ -14,9 +14,9 @@
 
     <hr/>
 
-    <div>
+    <div id="word-cloud">
         <span ng-repeat="(key, data) in words">
-        <span style="font-size: {{10 + (data-1)*(90/(max-2))}}px">{{key}}</span> ({{data}}) - 
+            <span style="font-size: {{10 + (data-1)*(90/(max-2))}}px"><a href="#/tweets/{{key.replace('#', '%23')}}">{{key}}</a></span> ({{data}}) - 
         </span>
     </div>
     

@@ -37,7 +37,7 @@ app.config(function ($routeProvider) {
           controller: 'HomeController', 
           templateUrl: 'pages/home.html' 
         })
-        .when('/tweets', { 
+        .when('/tweets/:keyword', { 
           controller: 'TweetsController', 
           templateUrl: 'pages/tweets.html' 
         })
@@ -131,12 +131,12 @@ app.controller('HomeController', function ($scope, $rootScope) {
     $scope.error = '';
     if ( $scope.filecontent() === 'error' ) { $scope.error = 'stats loading error'; }
 });
-    
-app.controller('TweetsController', function ($scope, $rootScope) {
+
+app.controller('TweetsController', function ($scope, $rootScope, $routeParams) {
     $scope.filecontent = function() { return $rootScope.fileContent; }
     $scope.tweets = $scope.filecontent().tweets;
+    $scope.filterKeyword = $routeParams.keyword;
 });
- 
 
 app.controller('WordController', function ($scope, $rootScope) {
     $scope.filecontent = function() { return $rootScope.fileContent; }
