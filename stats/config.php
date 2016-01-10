@@ -12,8 +12,8 @@ define ('DATUMBOX_API','');
 //for more requests you will need to create your own service running the Datumbox Machine Learning Framework
 
 define ('PAGENUM', 1); // search/tweets api requests, change if you want more than 100 tweets
-define ('PAGESIZE', 10); // tweets per api request - twitter search/tweets api limit 100
+define ('PAGESIZE', 20); // tweets per api request - twitter search/tweets api limit 100
 
-define ('MIN_FOLLOWERS', 10); //excluding users from stats
-define ('MIN_WORDCOUNT', 2); //min appearances of words returned in word count
+define ('MIN_FOLLOWERS', 10); // excluding users with less followers from stats
+define ('MIN_WORDCOUNT', 2); // min appearances of words returned in word count
 ?>

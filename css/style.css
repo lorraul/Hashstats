@@ -2,70 +2,47 @@ body {
     font-family: 'Source Sans Pro', sans-serif;
     background-color: #eee;
 }
-#container {
-    max-width: 1024px;
-    margin: 0 auto;
-}
-#header { 
-    width: 100%;
-    font-weight: bold;  
-}
-#title {
-    font-size: 50px;
-    text-align: center;
-}
-#menu{
-    background-color: #4099ff;
-    width: 100%;
-    height: 41px;
-    overflow: hidden;
-}
-#menu ul {
-    font-size: 18px;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-#menu li {
-    display: inline;
-    float:left;
-}
-#statmenu {
-    float:left;
-}
-#optmenu {
-    float:right;
-}
-#menu a:link, #menu a:visited {
-    color: #fff;
-    text-decoration: none;
-    text-align: center;
-    display: block;
-    width: 100px;
-    padding: 10px;
-}
-#menu a:hover, #menu a:active {
-    background-color: #7A991A;
+
+.navbar {
+    font-size: 16px;
+    margin-bottom: 0;
 }
 
-#page {
-    border-bottom: 1px #ccc solid;
-    padding: 15px 0px 25px 0px;
+.navbar a:hover {
+  color: #ffffff;
+}
+
+#title {
+    font-size: 30px;
+    font-weight: bold;  
+}
+
+main {
+    margin-bottom: 20px;
     font-family: 'Open Sans', sans-serif;
 }
-#footer {
-    margin-top: 10px;
+
+.row-content {
+    padding-bottom: 20px;
+    border-bottom: 1px dashed #bbb;
+}
+
+main h2 {
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #bbb;
+}
+
+footer{
     text-align: center;
 }
+
 #searchform {
     text-align: center;
     width: 100%;
+    margin-top: 30px;
     margin-bottom: 30px;
 }
-#word-cloud a{
-    color: #000;
-    text-decoration: none;
-}
+
 input[type=text], input[type=submit] {
     height: 30px;
     outline: none;
@@ -74,6 +51,7 @@ input[type=text], input[type=submit] {
     background-color: white;
     font-size: 16px;
 }
+
 .tweet {
     border: 1px #aaa dashed;
     padding: 5px;
@@ -85,10 +63,7 @@ input[type=text], input[type=submit] {
 .tweetmeta {
     font-size: 12px;
 }
-#sentpercent{
-    max-width: 60%; 
-    margin: 0 auto;
-}
+
 #positive{
     color: #8db600;
 }
@@ -101,15 +76,15 @@ input[type=text], input[type=submit] {
 #undefined{
     color: #907b3b;
 }
-.sentcell{
-    width: 25%; 
-    float:left; 
-    text-align: center;
-    margin-bottom: 50px;
-}
+
 .sentlarge{
     font-size: 40px;
 }
+
+#word-cloud a{
+    text-decoration: none;
+}
+
 .error-message{
     background-color: #ff0000;
     color: #fff;
