@@ -7,9 +7,11 @@ function sortDecr(obj){
         return sortable;
     };
 
-var app = angular.module('HashStats', ['ngRoute']);
+angular.module('HashStats', ['ngRoute', 'chart.js']);
 
-app.run(function($rootScope, $http) {
+angular.module('HashStats')
+
+.run(function($rootScope, $http) {
     $rootScope.fileContent = 'no file';
     $rootScope.configInfo = 'no config';
     var configLocation = location.origin + location.pathname;
@@ -19,11 +21,11 @@ app.run(function($rootScope, $http) {
     }, function(error){
         $rootScope.configInfo = 'error';
     });
-});
+})
 
     
 //routing
-app.config(function ($routeProvider) {
+.config(function ($routeProvider) {
     $routeProvider
         .when('/form', {
           controller: 'FormController',
@@ -60,11 +62,13 @@ app.config(function ($routeProvider) {
         .otherwise({ 
           redirectTo: '/home' 
         }); 
-});
+})
+;
 
 //controllers    
+angular.module('HashStats')
 
-app.controller('FormController', function ($scope, $http, $rootScope, $location) {
+.controller('FormController', ['$scope', '$http', '$rootScope', '$location', function ($scope, $http, $rootScope, $location) {
     //var getContent = function(filename){ return $http.get('sample.json'); };
     var getContent = function(keyword){
         var location = window.location.href.substring(0, window.location.href.lastIndexOf('#'));
@@ -92,9 +96,9 @@ app.controller('FormController', function ($scope, $http, $rootScope, $location)
         $scope.filecontent = function() { return $rootScope.fileContent; }
         $location.path('/loading');
     };
-});
+}])
 
-app.controller('LoadController', function ($scope, $rootScope, $location) {
+.controller('LoadController', ['$scope', '$rootScope', '$location', function ($scope, $rootScope, $location) {
     
     var countdown = function(duration){
         var duration, minutes, seconds, display = document.querySelector('#timer');
@@ -124,21 +128,21 @@ app.controller('LoadController', function ($scope, $rootScope, $location) {
           $location.path('/home');
         }
     }); 
-});
+}])
 
-app.controller('HomeController', function ($scope, $rootScope) {
+.controller('HomeController', ['$scope', '$rootScope', function ($scope, $rootScope) {
     $scope.filecontent = function() { return $rootScope.fileContent; }
     $scope.error = '';
     if ( $scope.filecontent() === 'error' ) { $scope.error = 'stats loading error'; }
-});
+}])
 
-app.controller('TweetsController', function ($scope, $rootScope, $routeParams) {
+.controller('TweetsController', ['$scope', '$rootScope', '$routeParams', function ($scope, $rootScope, $routeParams) {
     $scope.filecontent = function() { return $rootScope.fileContent; }
     $scope.tweets = $scope.filecontent().tweets;
     $scope.filterKeyword = $routeParams.keyword;
-});
+}])
 
-app.controller('WordController', function ($scope, $rootScope) {
+.controller('WordController', ['$scope', '$rootScope', function ($scope, $rootScope) {
     $scope.filecontent = function() { return $rootScope.fileContent; }
    
     $scope.formobj = {
@@ -159,12 +163,9 @@ app.controller('WordController', function ($scope, $rootScope) {
             }
         }); 
     }
-});
-    
+}])
 
-app.requires.push('chart.js');
-
-app.controller('SentimentController', function ($scope, $rootScope) {
+.controller('SentimentController', ['$scope', '$rootScope', function ($scope, $rootScope) {
 
     $scope.filecontent = function() { return $rootScope.fileContent; }
     
@@ -185,9 +186,9 @@ app.controller('SentimentController', function ($scope, $rootScope) {
         $scope.sentcount = Object.keys($scope.filecontent().sentiment).map(function (key) {return $scope.filecontent().sentiment[key]});
     };
 
-});
+}])
 
-app.controller('LangController', function ($scope, $rootScope) {
+.controller('LangController',['$scope', '$rootScope', function ($scope, $rootScope) {
     $scope.filecontent = function() { return $rootScope.fileContent; }
 
     $scope.colours = ['#8DB600','#FDB600','#DC143C','#907B3B'];
@@ -212,18 +213,19 @@ app.controller('LangController', function ($scope, $rootScope) {
 
         $scope.langcount = [$scope.langcount];
     }
-});
+}])
 
-app.controller('PDFController', function ($scope, $rootScope) {
+.controller('PDFController',['$scope', '$rootScope', function ($scope, $rootScope) {
     $scope.filecontent = function() { return $rootScope.fileContent; }
     if (typeof $scope.filecontent() !== 'string') {
         $scope.created = createPDF($scope.filecontent());
     }
-});
+}]);
 
 //directives
+angular.module('HashStats')
 
-app.directive('tweet', function(){
+.directive('tweet', function(){
     return{
       restrict: 'E',
     scope: {
