@@ -98,20 +98,7 @@ angular.module('HashStats')
     };
 }])
 
-.controller('LoadController', ['$scope', '$rootScope', '$location', function ($scope, $rootScope, $location) {
-    
-    var countdown = function(duration){
-        var duration, minutes, seconds, display = document.querySelector('#timer');
-        display.textContent = '99:99';
-        setInterval(function(){ 
-            minutes = parseInt(duration / 60, 10);
-            seconds = parseInt(duration % 60, 10);
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            seconds = seconds < 10 ? '0' + seconds : seconds;
-            display.textContent = minutes + ':' + seconds;
-            if (--duration < 0) { duration = 0; }
-        }, 1000);
-    };   
+.controller('LoadController', ['$scope', '$rootScope', '$location', '$interval', function ($scope, $rootScope, $location, $interval) {
     
     $scope.filecontent = function() { return $rootScope.fileContent; }
     $scope.configInfo = function() { return $rootScope.configInfo; }
@@ -119,7 +106,10 @@ angular.module('HashStats')
     $scope.$watch('configInfo()', function() {
         if (typeof $scope.configInfo() !== 'string') {
             $scope.estimatedTime = $scope.configInfo().estimatedtime;
-            countdown($scope.estimatedTime);
+            $scope.valueNow = 0;
+            $scope.timeLeft = $scope.estimatedTime;
+            $interval(function() { $scope.valueNow++; }, ($scope.estimatedTime*1000)/100 , 100);
+            $interval(function() { $scope.timeLeft--; }, 1000 , $scope.estimatedTime);
         }
     });
     
@@ -152,13 +142,13 @@ angular.module('HashStats')
     if (typeof $scope.filecontent() !== 'string') {
         $scope.words = JSON.parse(JSON.stringify($scope.filecontent().word_count));
         $scope.mainkeyword = $scope.filecontent().meta.keyword;
-        $scope.mainvalue = $scope.filecontent().word_count[$scope.mainkeyword];  
+        $scope.mainvalue = $scope.words[$scope.mainkeyword];  
         $scope.$watch('formobj.hidekw', function () {
             if ($scope.formobj.hidekw == true) {
                 delete $scope.words[$scope.mainkeyword]; 
                 $scope.max = Math.max.apply(null, Object.keys($scope.words).map(function(key) { return $scope.words[key]; }));
             } else {
-                $scope.words[$scope.mainkeyword] = $scope.mainvalue;
+                if ( typeof($scope.mainvalue) !== 'undefined' ) $scope.words[$scope.mainkeyword] = $scope.mainvalue;
                 $scope.max = Math.max.apply(null, Object.keys($scope.words).map(function(key) { return $scope.words[key]; }));
             }
         }); 
@@ -210,6 +200,8 @@ angular.module('HashStats')
             $scope.labels.push($scope.lang[i][0]);
             $scope.langcount.push($scope.lang[i][1]);
         }
+        
+        if ( $scope.langonce === '' ) { $scope.langonce = 'non'; }
 
         $scope.langcount = [$scope.langcount];
     }

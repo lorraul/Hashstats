@@ -1,4 +1,10 @@
-Estimated load time: {{estimatedTime}} sec.<br/>
-Time left: <span id="timer"></span>
-<br/><br/>
 Loading data. Please wait ...
+<br><br>
+Estimated load time: {{estimatedTime}} sec.<br/>
+Time left: {{timeLeft}} sec
+<br><br>
+<div class="progress">
+<div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="{{valueNow}}" aria-valuemin="0" aria-valuemax="100" style="width:{{valueNow}}%">
+  {{valueNow}}%
+</div>
+</div>
