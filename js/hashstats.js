@@ -39,7 +39,7 @@ angular.module('HashStats')
           controller: 'HomeController', 
           templateUrl: 'pages/home.html' 
         })
-        .when('/tweets/:keyword', { 
+        .when('/tweets/:keyword/:page', { 
           controller: 'TweetsController', 
           templateUrl: 'pages/tweets.html' 
         })
@@ -126,28 +126,68 @@ angular.module('HashStats')
     if ( $scope.filecontent() === 'error' ) { $scope.error = 'stats loading error'; }
 }])
 
-.controller('TweetsController', ['$scope', '$rootScope', '$routeParams', function ($scope, $rootScope, $routeParams) {
+.controller('TweetsController', ['$scope', '$rootScope', '$routeParams', '$filter', function ($scope, $rootScope, $routeParams, $filter) {
     $scope.filecontent = function() { return $rootScope.fileContent; }
-    $scope.tweets = $scope.filecontent().tweets;
-    $scope.filterKeyword = $routeParams.keyword;
+    var filterKeyword = $routeParams.keyword;
+    var numberOfTweets;
+    if ( $scope.filecontent() != 'no file') 
+        numberOfTweets = parseInt($scope.filecontent().meta.numtweets);
+    $scope.currentPage = $routeParams.page;
+    var tweets = $scope.filecontent().tweets;
+    var tweetsPerPage = 10;
+    var startTweet = ($scope.currentPage - 1) * tweetsPerPage;
+    var endTweet = $scope.currentPage * tweetsPerPage;
+    var filteredTweets;
+    
+    $scope.$watch('filterKeyword', function()
+    { 
+        if ( filterKeyword == 'all') {
+            filteredTweets = tweets;
+            $scope.tweetsIntro = 'Number of tweets: ' + $scope.filecontent().meta.numtweets + '.';
+        }
+        else {
+            filteredTweets = $filter('filter')(tweets, {3:filterKeyword});
+            $scope.tweetsIntro = 'Filtered by keyword: ' + filterKeyword + '.';
+        }
+        $scope.tweetsOnCurrentPage = filteredTweets.slice(startTweet, endTweet);
+        pageNumber = Math.ceil( filteredTweets.length / tweetsPerPage );
+        var previousPage, nextPage;
+        if ( $scope.currentPage != 1 ) previousPage = parseInt($scope.currentPage)-1; else previousPage = 1;
+        if ( $scope.currentPage != pageNumber ) nextPage = parseInt($scope.currentPage)+1; else nextPage = pageNumber;
+        $scope.firstLink = '#/tweets/' + filterKeyword + '/1';
+        $scope.lastLink = '#/tweets/' + filterKeyword + '/' + pageNumber;
+        $scope.previousLink = '#/tweets/' + filterKeyword + '/' + previousPage;
+        $scope.nextLink = '#/tweets/' + filterKeyword + '/' + nextPage;
+
+        if ( $scope.currentPage == 1 ) $scope.firstClass = 'disabled'; else $scope.firstClass = '';
+        if ( $scope.currentPage == 1 ) $scope.previousClass = 'disabled'; else $scope.previousClass = '';
+        if ( $scope.currentPage == pageNumber ) $scope.nextClass = 'disabled'; else $scope.nextClass = '';
+        if ( $scope.currentPage == pageNumber ) $scope.lastClass = 'disabled'; else $scope.lastClass = '';
+    });
 }])
 
 .controller('WordController', ['$scope', '$rootScope', function ($scope, $rootScope) {
     $scope.filecontent = function() { return $rootScope.fileContent; }
    
+    $scope.hidebuttonText = 'Hide';
+    $scope.hidebuttonClass = 'btn btn-success active';
     $scope.formobj = {
-        hidekw: false
+        hideKeyword: false
     };
 
     if (typeof $scope.filecontent() !== 'string') {
         $scope.words = JSON.parse(JSON.stringify($scope.filecontent().word_count));
         $scope.mainkeyword = $scope.filecontent().meta.keyword;
         $scope.mainvalue = $scope.words[$scope.mainkeyword];  
-        $scope.$watch('formobj.hidekw', function () {
-            if ($scope.formobj.hidekw == true) {
+        $scope.$watch('formobj.hideKeyword', function () {
+            if ($scope.formobj.hideKeyword == true) {
+                $scope.hidebuttonText = 'Show';
+                $scope.hidebuttonClass = 'btn btn-info btn-xs active';
                 delete $scope.words[$scope.mainkeyword]; 
                 $scope.max = Math.max.apply(null, Object.keys($scope.words).map(function(key) { return $scope.words[key]; }));
             } else {
+                $scope.hidebuttonText = 'Hide';
+                $scope.hidebuttonClass = 'btn btn-success btn-xs';
                 if ( typeof($scope.mainvalue) !== 'undefined' ) $scope.words[$scope.mainkeyword] = $scope.mainvalue;
                 $scope.max = Math.max.apply(null, Object.keys($scope.words).map(function(key) { return $scope.words[key]; }));
             }

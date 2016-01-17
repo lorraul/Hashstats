@@ -7,16 +7,17 @@
     <p>Word frequency in analyzed tweets.</p>
     
     <form name="hideKeyword">
-    <label>Hide main keyword '{{mainkeyword}}':
-    <input type="checkbox" ng-model="formobj.hidekw">
-    </label>
-    </form>
-
-    <hr/>
+        <label for="hidekw">Hide keyword '{{mainkeyword}}':</label>
+		<div class="btn-group">
+		  <label class="{{hidebuttonClass}}">
+		    <input type="checkbox" id="hidekw" ng-model="formobj.hideKeyword"> {{hidebuttonText}}
+		  </label>
+		</div>
+    </form>  
 
     <div id="word-cloud">
         <span ng-repeat="(key, data) in words">
-            <span style="font-size: {{10 + (data-1)*(90/(max-2))}}px"><a href="#/tweets/{{key.replace('#', '%23')}}">{{key}}</a></span> ({{data}}) - 
+            <span style="font-size: {{10 + (data-1)*(90/(max-2))}}px"><a href="#/tweets/{{key.replace('#', '%23')}}/1">{{key}}</a></span> ({{data}}) - 
         </span>
     </div>
     
