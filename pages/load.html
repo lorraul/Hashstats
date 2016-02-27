@@ -1,3 +1,5 @@
+
+<div ng-if="message == ''">
 Loading data. Please wait ...<br>
 Don't close the browser window.
 <br><br>
@@ -7,5 +9,6 @@ Time left: {{timeLeft}} sec
 <div class="progress">
 <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="{{valueNow}}" aria-valuemin="0" aria-valuemax="100" style="width:{{valueNow}}%">
   {{valueNow}}%
+</div>
 </div>
 </div>

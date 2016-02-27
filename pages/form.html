@@ -1,7 +1,5 @@
 <h2>Search</h2>
 
-<div ng-if="error != ''"><span class="error-message">{{error}}</span></div>
-
 <div id="searchform">
     <div style="font-weight: bold; margin-bottom: 20px;">Enter a keyword / hashtag:</div>
     <form name="searchForm" ng-submit="submit()">
@@ -10,7 +8,7 @@
     </form>
 </div>
 
-Estimated load time with current settings: {{configInfo().estimatedtime}} sec
+Estimated load time with current settings: {{configInfo.estimatedtime}} sec
 <br/><br/>
 Predefined variables:<br/>
-<small>PAGENUM = {{configInfo().pagenum}}, PAGESIZE = {{configInfo().pagesize}}, MIN_FOLLOWERS = {{configInfo().minfollowers}}, MIN_WORDCOUNT = {{configInfo().minwordcount}}</small><br/>
+<small>PAGENUM = {{configInfo.pagenum}}, PAGESIZE = {{configInfo.pagesize}}, MIN_FOLLOWERS = {{configInfo.minfollowers}}, MIN_WORDCOUNT = {{configInfo.minwordcount}}</small><br/>

@@ -1,8 +1,8 @@
 <h2>Sentiment</h2>
 
-<div ng-if="filecontent() == 'no file'">No stats! <a href="#/form">Search for a keyword.</a></div>
+<div ng-if="statsData == 'empty'">No stats! <a href="#/form">Search for a keyword.</a></div>
 
-<div ng-if="filecontent() != 'no file'">
+<div ng-if="statsData != 'empty'">
     
     <p>Sentiment of analyzed tweets using DatumBox. It classifies the tweets as positive, negative or neutral depending on their context.</p>
     

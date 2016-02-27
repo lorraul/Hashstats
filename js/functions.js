@@ -1,3 +1,11 @@
+function sortDecr(obj){
+        var sortable = [];
+        for (var lang in obj)
+            sortable.push([lang, obj[lang]]);
+        sortable.sort(function(a, b) {return -(a[1] - b[1])});
+        return sortable;
+    };
+
 function createPDF(filecontent){
     var marginLeft = 20;
     var marginTop = 25;
